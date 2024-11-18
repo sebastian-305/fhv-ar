@@ -15,6 +15,6 @@ jobs:
         protocol: ftps
         username: sebastpt_1
         password: ${{secrets.FTP_PW}}
-        local-dir: ./
+        local-dir: ./files/
       
         
