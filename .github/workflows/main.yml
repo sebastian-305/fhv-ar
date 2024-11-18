@@ -13,7 +13,7 @@ jobs:
       with:
         server: www383.your-server.de
         protocol: ftps
-        username: sebastpt_0
+        username: sebastpt_1
         password: ${{secrets.FTP_PW}}
         local-dir: ./AR/
       
