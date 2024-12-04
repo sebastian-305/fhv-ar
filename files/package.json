@@ -1,0 +1,12 @@
+{
+  "dependencies": {
+    "three": "^0.169.0",
+    "locar": "file:../locar-0.0.2.tgz"
+  },
+  "devDependencies": {
+    "vite": "^5.4.8"
+  },
+  "scripts": {
+    "build": "vite build"
+  }
+}
