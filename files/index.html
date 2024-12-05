@@ -7,6 +7,9 @@
     </head>
     <body>
         <div id="qr-reader" style="width: 600px"></div>
+        <button onclick="getLocation()">Try It</button>
+
+        <p id="demo_loc"></p>
         <!-- include the library -->
         <script src="https://unpkg.com/html5-qrcode@2.0.9/dist/html5-qrcode.min.js"></script>
         <script>
@@ -18,6 +21,25 @@
                 qrbox: 250,
             });
             html5QrcodeScanner.render(onScanSuccess);
+        </script>
+        <script>
+            const x = document.getElementById('demo_loc');
+            function getLocation() {
+                if (navigator.geolocation) {
+                    navigator.geolocation.getCurrentPosition(showPosition);
+                } else {
+                    x.innerHTML =
+                        'Geolocation is not supported by this browser.';
+                }
+            }
+
+            function showPosition(position) {
+                x.innerHTML =
+                    'Latitude: ' +
+                    position.coords.latitude +
+                    '<br>Longitude: ' +
+                    position.coords.longitude;
+            }
         </script>
     </body>
 </html>
