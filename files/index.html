@@ -15,6 +15,8 @@
         <script>
             function onScanSuccess(decodedText, decodedResult) {
                 console.log(`Code scanned = ${decodedText}`, decodedResult);
+                if (`${decodedText}`.slice(-9) === 'aa132f5f6')
+                    alert('Rotes Haus gescannt!');
             }
             var html5QrcodeScanner = new Html5QrcodeScanner('qr-reader', {
                 fps: 10,
