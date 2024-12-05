@@ -4,19 +4,48 @@
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>Document</title>
+        <style>
+            #qr-wrapper {
+                position: relative;
+                width: 600px;
+            }
+            #overlay {
+                top: 0;
+                right: 0;
+                display: none;
+                position: absolute;
+                opacity: 0.9;
+                background-color: burlywood;
+                width: 100%;
+            }
+        </style>
     </head>
     <body>
-        <div id="qr-reader" style="width: 600px"></div>
+        <div id="qr-wrapper">
+            <div id="qr-reader"></div>
+            <div id="overlay">
+                <h2>Rotes Haus</h2>
+                <p>Das Rote Haus ist rot und ein Haus.</p>
+                <img src="./resources/rotes_mini_haus.jpg" alt="" />
+                <button
+                    onclick="document.getElementById('overlay').style.display = 'none'">
+                    Close
+                </button>
+            </div>
+        </div>
         <button onclick="getLocation()">Try It</button>
 
         <p id="demo_loc"></p>
         <!-- include the library -->
         <script src="https://unpkg.com/html5-qrcode@2.0.9/dist/html5-qrcode.min.js"></script>
+        <!-- Gute Seite: https://www.the-qrcode-generator.com/ -->
         <script>
             function onScanSuccess(decodedText, decodedResult) {
                 console.log(`Code scanned = ${decodedText}`, decodedResult);
-                if (`${decodedText}`.slice(-9) === 'aa132f5f6')
+                if (`${decodedText}`.slice(-9) === 'aa132f5f6') {
                     alert('Rotes Haus gescannt!');
+                    document.getElementById('overlay').style.display = 'block';
+                }
             }
             var html5QrcodeScanner = new Html5QrcodeScanner('qr-reader', {
                 fps: 10,
