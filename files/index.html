@@ -14,73 +14,7 @@
         <link
             href="https://fonts.googleapis.com/css2?family=Beautiful+Delicious&display=swap"
             rel="stylesheet" />
-        <style>
-            #overlay {
-                display: none;
-                position: absolute;
-                width: 600px;
-                max-width: 100%;
-                height: fit-content;
-                top: 50%;
-                left: 50%;
-                transform: translate(-50%, -50%);
-                -ms-transform: translate(-50%, -50%);
-                padding: 1rem;
-                background-color: #d3d3d3fa;
-                border: 2px solid darkgray;
-                z-index: 1;
-                transition: opacity 0.5s ease;
-                opacity: 0;
-                box-sizing: border-box;
-            }
-            #ov-close-button {
-                font-family: 'Courier New', Courier, monospace;
-                font-size: 2rem;
-                font-weight: bold;
-                user-select: none;
-                position: absolute;
-                right: 1rem;
-                top: 1rem;
-                line-height: 1rem;
-                z-index: 9999;
-            }
-            #ov-close-button:hover {
-                color: red;
-            }
-
-            #info-wrapper {
-                display: flex;
-                flex-direction: column;
-                height: fit-content;
-                display: none;
-            }
-
-            #info-wrapper figure {
-                margin: 0.2rem auto;
-                height: min-content;
-                width: fit-content;
-                max-height: 400px;
-                overflow: hidden;
-                object-fit: contain;
-                border: 6px silver ridge;
-            }
-            #info-wrapper figure img {
-                width: 100%;
-                height: 100%;
-                max-height: 400px;
-                object-fit: contain;
-            }
-
-            #close-button {
-                display: block;
-                margin: auto;
-                font-size: 1.5rem;
-            }
-
-            .clickable:hover {
-                cursor: pointer;
-            }
-        </style>
+        <link rel="stylesheet" href="resources/overlay.css" />
     </head>
     <body>
         <div id="overlay">
@@ -142,21 +76,13 @@
                     <h2>Top Sehenswürdigkeiten in Dornbirn</h2>
                 </div>
             </div>
-            <div id="qr-scanner"></div>
         </main>
-
-        <p id="demo_loc"></p>
         <!-- include the library -->
         <script src="https://unpkg.com/html5-qrcode@2.0.9/dist/html5-qrcode.min.js"></script>
         <!-- Gute Seite: https://www.the-qrcode-generator.com/ -->
         <script>
             function onScanSuccess(decodedText, decodedResult) {
-                // console.log(`Code scanned = ${decodedText}`, decodedResult);
                 set_infobox_and_show(get_landmark(`${decodedText}`.slice(-9)));
-                // if (`${decodedText}`.slice(-9) === 'aa132f5f6') {
-                //     //alert('Rotes Haus gescannt!');
-                //     document.getElementById('overlay').style.display = 'block';
-                // }
             }
             var html5QrcodeScanner = new Html5QrcodeScanner('qr-reader', {
                 fps: 5,
@@ -164,163 +90,8 @@
             });
             html5QrcodeScanner.render(onScanSuccess);
         </script>
-        <script>
-            const x = document.getElementById('demo_loc');
-            function getLocation() {
-                if (navigator.geolocation) {
-                    navigator.geolocation.getCurrentPosition(showPosition);
-                } else {
-                    x.innerHTML =
-                        'Geolocation is not supported by this browser.';
-                }
-            }
+        <script src="resources/location.js"></script>
 
-            function showPosition(position) {
-                let lat = position.coords.latitude;
-                let long = position.coords.longitude;
-
-                let locations = {
-                    inatura: {
-                        lat: {
-                            min: 47.408521,
-                            max: 47.409926,
-                        },
-                        long: {
-                            min: 9.737669,
-                            max: 9.740158,
-                        },
-                    },
-                    rotes_haus: {
-                        lat: {
-                            min: 47.413068,
-                            max: 47.413609,
-                        },
-                        long: {
-                            min: 9.741949,
-                            max: 9.742486,
-                        },
-                    },
-                    karren: {
-                        lat: {
-                            min: 47.387707,
-                            max: 47.400835,
-                        },
-                        long: {
-                            min: 9.750212,
-                            max: 9.754469,
-                        },
-                    },
-                };
-
-                console.log('Latitude: ' + lat + '<br>Longitude: ' + long);
-
-                // lat = 47.387717;
-                // long = 9.750222;
-                console.log('Latitude: ' + lat + '<br>Longitude: ' + long);
-
-                switch (position) {
-                    case lat > locations.inatura.lat.min &&
-                    lat < locations.inatura.lat.max &&
-                    long > locations.inatura.long.min &&
-                    long < locations.inatura.long.max
-                        ? position
-                        : -1:
-                        set_infobox_and_show(get_landmark('ba232f5f6'));
-                        console.log('Inatura');
-                        break;
-                    case lat > locations.karren.lat.min &&
-                    lat < locations.karren.lat.max &&
-                    long > locations.karren.long.min &&
-                    long < locations.karren.long.max
-                        ? position
-                        : -1:
-                        set_infobox_and_show(get_landmark('a5132f5f6'));
-                        console.log('Karren');
-                        break;
-                    case lat > locations.rotes_haus.lat.min &&
-                    lat < locations.rotes_haus.lat.max &&
-                    long > locations.rotes_haus.long.min &&
-                    long < locations.rotes_haus.long.max
-                        ? position
-                        : -1:
-                        set_infobox_and_show(get_landmark('aa132f5f6'));
-                        console.log('Rotes Haus');
-                        break;
-                    default:
-                        console.log('Place unknown');
-                        document.getElementById('location-span').innerHTML =
-                            'Keine Infotafel an deinen Koordinaten gefunden!';
-                }
-            }
-        </script>
-        <script>
-            function get_random_info() {
-                let random = Math.floor(Math.random() * 4);
-                console.log('Start random: ' + random);
-
-                let landmarks = ['aa132f5f6', 'ba232f5f6', 'a5132f5f6', 'fd'];
-                let result = get_landmark(landmarks[random]);
-
-                console.log(result);
-                set_infobox_and_show(result);
-            }
-
-            function set_infobox_and_show(result) {
-                document.getElementById(
-                    'info-sheet-img',
-                ).src = `./resources/info/${result.info_text}`;
-                document.getElementById(
-                    'info-picture-img',
-                ).src = `./resources/info/${result.picture}`;
-
-                document.getElementById('qr-wrapper').style.display = 'none';
-                document.getElementById('info-wrapper').style.display = 'block';
-            }
-
-            function open_overlay() {
-                document.getElementById('overlay').style.display = 'block';
-                setTimeout(
-                    () =>
-                        (document.getElementById('overlay').style.opacity = 1),
-                    10,
-                );
-            }
-
-            function close_overlay() {
-                document.getElementById('overlay').style.opacity = 0;
-                setTimeout(() => {
-                    document.getElementById('qr-wrapper').style.display =
-                        'block';
-                    document.getElementById('info-wrapper').style.display =
-                        'none';
-                }, 300);
-
-                setTimeout(() => {
-                    document.getElementById('overlay').style.display = 'none';
-                }, 500);
-            }
-
-            function get_landmark(decodedText) {
-                let result = {picture: '', info_text: ''};
-                switch (decodedText) {
-                    case 'aa132f5f6':
-                        result.picture = 'rotes-haus-pic.jpg';
-                        result.info_text = 'rotes-haus-text.png';
-                        break;
-                    case 'ba232f5f6':
-                        result.picture = 'inatura-pic.jpg';
-                        result.info_text = 'inatura-text.png';
-                        break;
-                    case 'a5132f5f6':
-                        result.picture = 'karren-pic.jpg';
-                        result.info_text = 'karren-text.png';
-                        break;
-                    default:
-                        result.info_text = 'unbekannt.png';
-                        result.picture = 'sad.png';
-                }
-                return result;
-            }
-        </script>
+        <script src="resources/dom.js"></script>
     </body>
 </html>
