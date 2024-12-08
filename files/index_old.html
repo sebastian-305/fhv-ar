@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Document</title>
+        <style>
+            #qr-wrapper {
+                position: relative;
+                width: 600px;
+            }
+            #overlay {
+                margin: auto;
+                width: 500px;
+                height: 300px;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                -ms-transform: translate(-50%, -50%);
+                position: absolute;
+                opacity: 0.98;
+                background-color: burlywood;
+                padding: 1rem;
+                border: 2px solid darkgray;
+            }
+            #ov-close-button {
+                position: absolute;
+                right: 1rem;
+            }
+            #ov-close-button:hover {
+                color: red;
+                cursor: pointer;
+            }
+            #overlay figure {
+                margin: 0;
+                width: 150px;
+                height: 150px;
+                overflow: hidden;
+                float: right;
+                object-fit: cover;
+            }
+            #overlay figure img {
+                width: 100%;
+            }
+            #qr-wrapper {
+                visibility: hidden;
+            }
+        </style>
+    </head>
+    <body>
+        <div id="overlay">
+            <span
+                id="ov-close-button"
+                onclick="document.getElementById('overlay').style.display = 'none'">
+                X
+            </span>
+
+            <h2>Das Rote Haus</h2>
+
+            <figure>
+                <img src="./resources/rotes_mini_haus.jpg" alt="" />
+            </figure>
+            <p>
+                <ul>
+                    <li>
+                        Bau 1639: Errichtet von Michael Danner & Verena
+                        Rhomberg;
+                    </li>
+                    <li>
+                        typisches Holzbauwerk mit roten Anstrich aus
+                        Ochsenblut und Ochsengalle.
+                    </li><li>
+                        Zentrum der Politik: Schauplatz des
+                        Loskaufs von der Emser Herrschaft 1771 und Marktrechte 1793.
+                    </li>
+                    <li>
+                        Rettung 1954: Gerettet und renoviert von August & Elfriede
+                        Rhomberg, Wahrzeichen der Stadt.
+                    </li>
+                </ul>
+            </p>
+
+            <button
+                onclick="document.getElementById('overlay').style.display = 'none'">
+                Close
+            </button>
+        </div>
+        <div id="qr-wrapper">
+            <div id="qr-reader"></div>
+        </div>
+        <!-- <button onclick="getLocation()">Try It</button> -->
+
+        <p id="demo_loc"></p>
+        <!-- include the library -->
+        <script src="https://unpkg.com/html5-qrcode@2.0.9/dist/html5-qrcode.min.js"></script>
+        <!-- Gute Seite: https://www.the-qrcode-generator.com/ -->
+        <script>
+            function onScanSuccess(decodedText, decodedResult) {
+                console.log(`Code scanned = ${decodedText}`, decodedResult);
+                if (`${decodedText}`.slice(-9) === 'aa132f5f6') {
+                    //alert('Rotes Haus gescannt!');
+                    document.getElementById('overlay').style.display = 'block';
+                }
+            }
+            var html5QrcodeScanner = new Html5QrcodeScanner('qr-reader', {
+                fps: 10,
+                qrbox: 250,
+            });
+            html5QrcodeScanner.render(onScanSuccess);
+        </script>
+        <script>
+            const x = document.getElementById('demo_loc');
+            function getLocation() {
+                if (navigator.geolocation) {
+                    navigator.geolocation.getCurrentPosition(showPosition);
+                } else {
+                    x.innerHTML =
+                        'Geolocation is not supported by this browser.';
+                }
+            }
+
+            function showPosition(position) {
+                x.innerHTML =
+                    'Latitude: ' +
+                    position.coords.latitude +
+                    '<br>Longitude: ' +
+                    position.coords.longitude;
+            }
+        </script>
+    </body>
+</html>
