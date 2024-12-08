@@ -288,8 +288,13 @@
 
             function close_overlay() {
                 document.getElementById('overlay').style.opacity = 0;
-                document.getElementById('qr-wrapper').style.display = 'block';
-                document.getElementById('info-wrapper').style.display = 'none';
+                setTimeout(() => {
+                    document.getElementById('qr-wrapper').style.display =
+                        'block';
+                    document.getElementById('info-wrapper').style.display =
+                        'none';
+                }, 400);
+
                 setTimeout(() => {
                     document.getElementById('overlay').style.display = 'none';
                 }, 500);
