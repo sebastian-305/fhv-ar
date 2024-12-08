@@ -10,40 +10,55 @@
                 width: 600px;
             }
             #overlay {
+                position: absolute;
                 margin: auto;
-                width: 500px;
-                height: 300px;
+                width: 700px;
+                height: fit-content;
                 top: 50%;
                 left: 50%;
                 transform: translate(-50%, -50%);
                 -ms-transform: translate(-50%, -50%);
-                position: absolute;
-                opacity: 0.98;
-                background-color: burlywood;
                 padding: 1rem;
+                opacity: 0.98;
+                background-color: aliceblue;
                 border: 2px solid darkgray;
             }
             #ov-close-button {
+                font-family: 'Courier New', Courier, monospace;
+                font-size: 2rem;
+                font-weight: bold;
+                user-select: none;
                 position: absolute;
                 right: 1rem;
+                top: 1rem;
+                line-height: 1rem;
+                z-index: 9999;
             }
             #ov-close-button:hover {
                 color: red;
                 cursor: pointer;
             }
-            #overlay figure {
+
+            #info-wrapper {
+                display: flex;
+                height: fit-content;
+                /* display: none; */
+            }
+
+            #info-wrapper figure {
                 margin: 0;
-                width: 150px;
                 height: 150px;
+                flex-basis: 50%;
+                height: inherit;
                 overflow: hidden;
-                float: right;
+                /* float: left; */
                 object-fit: cover;
             }
             #overlay figure img {
                 width: 100%;
             }
             #qr-wrapper {
-                visibility: hidden;
+                display: none;
             }
         </style>
     </head>
@@ -54,41 +69,35 @@
                 onclick="document.getElementById('overlay').style.display = 'none'">
                 X
             </span>
+            <div id="info-wrapper">
+                <figure id="info-sheet">
+                    <img
+                        src="./resources/info/a_Rotes-Haus_Infotafel.png"
+                        alt="" />
+                </figure>
+                <figure id="info-picture">
+                    <img src="./resources/rotes_mini_haus.jpg" alt="" />
+                </figure>
+            </div>
+            <div id="qr-wrapper">
+                <div id="qr-reader"></div>
+                <p>
+                    Statt den QR-Code zu scannen kannst du auch die Infotafel
+                    über deinen Standort abrufen
+                    <button onclick="getLocation()">
+                        Standort auf Infotafel überprüfen
+                    </button>
+                </p>
+            </div>
 
-            <h2>Das Rote Haus</h2>
-
-            <figure>
-                <img src="./resources/rotes_mini_haus.jpg" alt="" />
-            </figure>
-            <p>
-                <ul>
-                    <li>
-                        Bau 1639: Errichtet von Michael Danner & Verena
-                        Rhomberg;
-                    </li>
-                    <li>
-                        typisches Holzbauwerk mit roten Anstrich aus
-                        Ochsenblut und Ochsengalle.
-                    </li><li>
-                        Zentrum der Politik: Schauplatz des
-                        Loskaufs von der Emser Herrschaft 1771 und Marktrechte 1793.
-                    </li>
-                    <li>
-                        Rettung 1954: Gerettet und renoviert von August & Elfriede
-                        Rhomberg, Wahrzeichen der Stadt.
-                    </li>
-                </ul>
-            </p>
-
+            <br />
             <button
+                type="button"
                 onclick="document.getElementById('overlay').style.display = 'none'">
                 Close
             </button>
         </div>
-        <div id="qr-wrapper">
-            <div id="qr-reader"></div>
-        </div>
-        <!-- <button onclick="getLocation()">Try It</button> -->
+        <div id="qr-wrapper"></div>
 
         <p id="demo_loc"></p>
         <!-- include the library -->
