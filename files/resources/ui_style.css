@@ -1,4 +1,5 @@
-body, html {
+body,
+html {
     margin: 0;
     padding: 0;
     width: 100%;
@@ -9,7 +10,7 @@ body, html {
 .wrapper {
     position: relative;
     width: 100%;
-    height: 100vh; 
+    height: 100vh;
     overflow: hidden;
 }
 
@@ -17,9 +18,9 @@ body, html {
     position: absolute;
     top: 0;
     left: 0;
-    width: 100%;       
-    height: 100%;      
-    object-fit: cover; 
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
 }
 
 .overlay {
@@ -30,21 +31,21 @@ body, html {
     height: 100%;
     display: flex;
     flex-direction: column;
-    justify-content: center; 
-    align-items: center;     
+    justify-content: center;
+    align-items: center;
     color: white;
     padding: 20px;
 }
 
 .logo-invert {
     filter: brightness(0) invert(1);
-    width: 75%; 
+    width: 75%;
     margin-bottom: 20px;
 }
 
 h1 {
     font-family: 'Cormorant Garamond', serif;
-    font-size: 3rem; 
+    font-size: 3rem;
     color: white;
     margin: 10px 0;
 }
@@ -58,7 +59,7 @@ h2 {
 }
 
 .scan-button {
-    font-family: 'Beautiful Delicious', sans-serif; 
+    font-family: 'Beautiful Delicious', sans-serif;
     font-size: 1.5rem;
     padding: 15px 30px;
     background-color: transparent;
@@ -71,32 +72,31 @@ h2 {
     display: inline-block;
 }
 
-
 .scan-button:hover {
-    background-color: white;
+    background-color: #eee;
 }
 
 .scan-button:focus {
-    outline: none; 
+    outline: none;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
 }
 
 @media (min-width: 426px) {
     .video {
         width: 100%;
-        height: 100%; 
+        height: 100%;
     }
 
     .overlay {
-        justify-content: space-evenly; 
+        justify-content: space-evenly;
     }
 
     .logo-invert {
-        width: 40%; 
+        width: 40%;
     }
 
     h1 {
-        font-size: 5rem; 
+        font-size: 5rem;
     }
 
     h2 {
