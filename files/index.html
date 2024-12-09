@@ -3,129 +3,102 @@
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Document</title>
-        <style>
-            #qr-wrapper {
-                position: relative;
-                width: 600px;
-            }
-            #overlay {
-                margin: auto;
-                width: 500px;
-                height: 300px;
-                top: 50%;
-                left: 50%;
-                transform: translate(-50%, -50%);
-                -ms-transform: translate(-50%, -50%);
-                position: absolute;
-                opacity: 0.98;
-                background-color: burlywood;
-                padding: 1rem;
-                border: 2px solid darkgray;
-            }
-            #ov-close-button {
-                position: absolute;
-                right: 1rem;
-            }
-            #ov-close-button:hover {
-                color: red;
-                cursor: pointer;
-            }
-            #overlay figure {
-                margin: 0;
-                width: 150px;
-                height: 150px;
-                overflow: hidden;
-                float: right;
-                object-fit: cover;
-            }
-            #overlay figure img {
-                width: 100%;
-            }
-            #qr-wrapper {
-                visibility: hidden;
-            }
-        </style>
+        <title>Dornbirn Erleben</title>
+        <link
+            href="https://fonts.googleapis.com/css2?family=Squada+One&display=swap"
+            rel="stylesheet" />
+        <link
+            href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;700&display=swap"
+            rel="stylesheet" />
+        <link
+            href="https://fonts.googleapis.com/css2?family=Beautiful+Delicious&display=swap"
+            rel="stylesheet" />
+        <link rel="stylesheet" href="resources/stylesheets/ui_style.css" />
+        <link rel="stylesheet" href="resources/stylesheets/overlay.css" />
+        <meta http-equiv="Cache-Control" content="no-cache, must-revalidate" />
+        <meta http-equiv="Pragma" content="no-cache" />
+        <meta http-equiv="Expires" content="0" />
+        <link
+            rel="shortcut icon"
+            href="./resources/ui_res/favicon-32x32.png"
+            type="image/x-icon" />
     </head>
     <body>
-        <div id="overlay">
+        <section id="overlay">
             <span
                 id="ov-close-button"
-                onclick="document.getElementById('overlay').style.display = 'none'">
+                class="clickable"
+                onclick="close_overlay()">
                 X
             </span>
+            <div id="info-wrapper">
+                <figure id="info-sheet">
+                    <img id="info-sheet-img" src="" alt="Infoblatt" />
+                </figure>
+                <figure id="info-picture">
+                    <img id="info-picture-img" src="" alt="Bild zu Infoblatt" />
+                </figure>
+            </div>
+            <div id="qr-wrapper">
+                <div id="qr-reader"></div>
+                <p>
+                    <span id="location-span">
+                        Statt den QR-Code zu scannen kannst du auch die
+                        Infotafel über deinen Standort abrufen.
+                    </span>
+                    <br />
+                    <button onclick="getLocation()">
+                        Standort auf Infotafel überprüfen
+                    </button>
+                </p>
+            </div>
 
-            <h2>Das Rote Haus</h2>
-
-            <figure>
-                <img src="./resources/rotes_mini_haus.jpg" alt="" />
-            </figure>
-            <p>
-                <ul>
-                    <li>
-                        Bau 1639: Errichtet von Michael Danner & Verena
-                        Rhomberg;
-                    </li>
-                    <li>
-                        typisches Holzbauwerk mit roten Anstrich aus
-                        Ochsenblut und Ochsengalle.
-                    </li><li>
-                        Zentrum der Politik: Schauplatz des
-                        Loskaufs von der Emser Herrschaft 1771 und Marktrechte 1793.
-                    </li>
-                    <li>
-                        Rettung 1954: Gerettet und renoviert von August & Elfriede
-                        Rhomberg, Wahrzeichen der Stadt.
-                    </li>
-                </ul>
-            </p>
-
+            <br />
             <button
-                onclick="document.getElementById('overlay').style.display = 'none'">
-                Close
+                type="button"
+                id="close-button"
+                class="clickable"
+                onclick="close_overlay()">
+                Schließen
             </button>
-        </div>
-        <div id="qr-wrapper">
-            <div id="qr-reader"></div>
-        </div>
-        <!-- <button onclick="getLocation()">Try It</button> -->
+        </section>
 
-        <p id="demo_loc"></p>
-        <!-- include the library -->
+        <main>
+            <div class="wrapper">
+                <video
+                    class="video"
+                    src="./resources/ui_res/Marktplatz.mp4"
+                    autoplay
+                    muted
+                    loop></video>
+                <div class="ui-overlay">
+                    <img
+                        src="./resources/ui_res/dornbirn-logo.png"
+                        alt="Logo Dornbirn"
+                        class="logo-invert" />
+                    <h1>Jetzt entdecken</h1>
+                    <button class="scan-button" onclick="open_overlay()">
+                        QR-CODE SCANNEN
+                    </button>
+                    <h2>Top Sehenswürdigkeiten in Dornbirn</h2>
+                </div>
+            </div>
+        </main>
+
         <script src="https://unpkg.com/html5-qrcode@2.0.9/dist/html5-qrcode.min.js"></script>
-        <!-- Gute Seite: https://www.the-qrcode-generator.com/ -->
         <script>
+            // Gute Seite zum QR-Codes generieren: https://www.the-qrcode-generator.com/
             function onScanSuccess(decodedText, decodedResult) {
-                console.log(`Code scanned = ${decodedText}`, decodedResult);
-                if (`${decodedText}`.slice(-9) === 'aa132f5f6') {
-                    //alert('Rotes Haus gescannt!');
-                    document.getElementById('overlay').style.display = 'block';
-                }
+                set_infobox_and_show(get_landmark(`${decodedText}`.slice(-9)));
             }
             var html5QrcodeScanner = new Html5QrcodeScanner('qr-reader', {
-                fps: 10,
+                fps: 5,
                 qrbox: 250,
             });
             html5QrcodeScanner.render(onScanSuccess);
         </script>
-        <script>
-            const x = document.getElementById('demo_loc');
-            function getLocation() {
-                if (navigator.geolocation) {
-                    navigator.geolocation.getCurrentPosition(showPosition);
-                } else {
-                    x.innerHTML =
-                        'Geolocation is not supported by this browser.';
-                }
-            }
-
-            function showPosition(position) {
-                x.innerHTML =
-                    'Latitude: ' +
-                    position.coords.latitude +
-                    '<br>Longitude: ' +
-                    position.coords.longitude;
-            }
-        </script>
+        <script src="resources/scripts/locations.js"></script>
+        <script src="resources/scripts/location_processing.js"></script>
+        <script src="resources/scripts/dom_processing.js"></script>
     </body>
 </html>
