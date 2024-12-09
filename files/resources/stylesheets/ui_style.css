@@ -23,7 +23,7 @@ html {
     object-fit: cover;
 }
 
-.overlay {
+.ui-overlay {
     position: absolute;
     top: 0;
     left: 0;
@@ -42,14 +42,14 @@ html {
     margin-bottom: 20px;
 }
 
-h1 {
+main h1 {
     font-family: 'Cormorant Garamond', serif;
     font-size: 3rem;
     color: white;
     margin: 10px 0;
 }
 
-h2 {
+main h2 {
     font-family: 'Squada One', sans-serif;
     font-size: 1.2rem;
     font-weight: lighter;

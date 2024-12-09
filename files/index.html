@@ -4,7 +4,6 @@
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>Dornbirn Erleben</title>
-        <link rel="stylesheet" href="resources/stylesheets/ui_style.css" />
         <link
             href="https://fonts.googleapis.com/css2?family=Squada+One&display=swap"
             rel="stylesheet" />
@@ -14,10 +13,11 @@
         <link
             href="https://fonts.googleapis.com/css2?family=Beautiful+Delicious&display=swap"
             rel="stylesheet" />
+        <link rel="stylesheet" href="resources/stylesheets/ui_style.css" />
         <link rel="stylesheet" href="resources/stylesheets/overlay.css" />
     </head>
     <body>
-        <div id="overlay">
+        <section id="overlay">
             <span
                 id="ov-close-button"
                 class="clickable"
@@ -26,10 +26,10 @@
             </span>
             <div id="info-wrapper">
                 <figure id="info-sheet">
-                    <img id="info-sheet-img" src="" alt="" />
+                    <img id="info-sheet-img" src="" alt="Infoblatt" />
                 </figure>
                 <figure id="info-picture">
-                    <img id="info-picture-img" src="" alt="" />
+                    <img id="info-picture-img" src="" alt="Bild zu Infoblatt" />
                 </figure>
             </div>
             <div id="qr-wrapper">
@@ -37,7 +37,7 @@
                 <p>
                     <span id="location-span">
                         Statt den QR-Code zu scannen kannst du auch die
-                        Infotafel über deinen Standort abrufen
+                        Infotafel über deinen Standort abrufen.
                     </span>
                     <br />
                     <button onclick="getLocation()">
@@ -54,7 +54,7 @@
                 onclick="close_overlay()">
                 Schließen
             </button>
-        </div>
+        </section>
 
         <main>
             <div class="wrapper">
@@ -64,7 +64,7 @@
                     autoplay
                     muted
                     loop></video>
-                <div class="overlay">
+                <div class="ui-overlay">
                     <img
                         src="./resources/ui_res/dornbirn-logo.png"
                         alt="Logo Dornbirn"
@@ -77,10 +77,10 @@
                 </div>
             </div>
         </main>
-        <!-- include the library -->
+
         <script src="https://unpkg.com/html5-qrcode@2.0.9/dist/html5-qrcode.min.js"></script>
-        <!-- Gute Seite: https://www.the-qrcode-generator.com/ -->
         <script>
+            // Gute Seite zum QR-Codes generieren: https://www.the-qrcode-generator.com/
             function onScanSuccess(decodedText, decodedResult) {
                 set_infobox_and_show(get_landmark(`${decodedText}`.slice(-9)));
             }
@@ -90,8 +90,8 @@
             });
             html5QrcodeScanner.render(onScanSuccess);
         </script>
-        <script src="resources/scripts/location.js"></script>
-
-        <script src="resources/scripts/dom.js"></script>
+        <script src="resources/scripts/locations.js"></script>
+        <script src="resources/scripts/location_processing.js"></script>
+        <script src="resources/scripts/dom_processing.js"></script>
     </body>
 </html>
