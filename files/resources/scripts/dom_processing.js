@@ -1,10 +1,10 @@
 function set_infobox_and_show(result) {
     document.getElementById(
         'info-sheet-img',
-    ).src = `./resources/info/${result.info_text}`;
+    ).src = `resources/info/${result.info_text}`;
     document.getElementById(
         'info-picture-img',
-    ).src = `./resources/info/${result.picture}`;
+    ).src = `resources/info/${result.picture}`;
 
     document.getElementById('qr-wrapper').style.display = 'none';
     document.getElementById('info-wrapper').style.display = 'block';

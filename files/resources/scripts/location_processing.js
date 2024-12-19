@@ -3,7 +3,7 @@ function getLocation() {
         navigator.geolocation.getCurrentPosition(showPosition);
     } else {
         document.getElementById('location-span').innerHTML =
-            'Geolocation wird von diesem Browser nicht unterstützt!.';
+            'Geolocation wird von diesem Browser nicht unterstützt!';
     }
 }
 
